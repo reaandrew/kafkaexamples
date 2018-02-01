@@ -64,6 +64,8 @@ export HOST="192.168.99.45"
 
 ### Example 1: Single kafka node
 
+![single-kafka-node.gif](single-kafka-node.gif)
+
 - A single producer and a single consumer
 - One partition as there is only one node
 
