@@ -44,13 +44,3 @@ message 1
 message 2
 message 3
 ```
-
-## References
-
-[https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html?page=2](https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html?page=2)
-
-[https://github.com/wurstmeister/kafka-docker](https://github.com/wurstmeister/kafka-docker)
-
-[https://stackoverflow.com/questions/38583608/connecting-to-zookeeper-in-a-apache-kafka-multi-node-cluster](https://stackoverflow.com/questions/38583608/connecting-to-zookeeper-in-a-apache-kafka-multi-node-cluster)
-
-[https://kafka.apache.org/quickstart](https://kafka.apache.org/quickstart)

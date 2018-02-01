@@ -33,9 +33,16 @@ In order to scale kafka locally an IP address of the host (which is not 127.0.0.
 export HOST="192.168.99.45"
 ```
 
-### Example 1: Single kafka node
+## [Example 1: Single kafka node](example-1)
 
 Set up a single kafka node with a single zookeeper node, creates a topic and then uses the kafka consumer and producer (supplied in the kafka distribution) to send and receieve several messages.
 
-[example-1](example-1)
+## References
 
+[https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html?page=2](https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html?page=2)
+
+[https://github.com/wurstmeister/kafka-docker](https://github.com/wurstmeister/kafka-docker)
+
+[https://stackoverflow.com/questions/38583608/connecting-to-zookeeper-in-a-apache-kafka-multi-node-cluster](https://stackoverflow.com/questions/38583608/connecting-to-zookeeper-in-a-apache-kafka-multi-node-cluster)
+
+[https://kafka.apache.org/quickstart](https://kafka.apache.org/quickstart)
