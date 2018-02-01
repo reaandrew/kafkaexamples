@@ -3,6 +3,8 @@ package kafkaexamples.consumer;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.Map;
+import java.lang.Runtime;
 
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -15,10 +17,9 @@ public class Main {
       private static Scanner in;
       private static boolean stop = false;
 
-      public void main(String[] argv)throws Exception{
+      public static void main(String[] argv) throws Exception{
           if (argv.length != 2) {
-              System.err.printf("Usage: %s <topicName> <groupId>\n",
-                      Main.class.getSimpleName());
+              System.err.printf("Usage: consumer.sh <topicName> <groupId>\n");
               System.exit(-1);
           }
           in = new Scanner(System.in);
@@ -26,14 +27,19 @@ public class Main {
           String groupId = argv[1];
 
           ConsumerThread consumerRunnable = new ConsumerThread(topicName,groupId);
+          Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {
+                  consumerRunnable.getKafkaConsumer().wakeup();
+                  System.out.println("Stopping consumer .....");
+                  try{
+                    consumerRunnable.join();
+                  }catch(Exception ex){
+
+                  }
+                }
+          });
           consumerRunnable.start();
-          String line = "";
-          while (!line.equals("exit")) {
-              line = in.next();
-          }
-          consumerRunnable.getKafkaConsumer().wakeup();
-          System.out.println("Stopping consumer .....");
-          consumerRunnable.join();
+          for(;;);
       }
 
       private static class ConsumerThread extends Thread{
@@ -46,12 +52,16 @@ public class Main {
               this.groupId = groupId;
           }
           public void run() {
+
+              Map<String, String> env = System.getenv();
+              String kafkaServers = env.get("KAFKA_SERVERS");
+
               Properties configProperties = new Properties();
-              configProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.99.45:9092");
+              configProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServers);
               configProperties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
               configProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
               configProperties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-              configProperties.put(ConsumerConfig.CLIENT_ID_CONFIG, "simple");
+              configProperties.put(ConsumerConfig.CLIENT_ID_CONFIG, "simple_consumer");
 
               //Figure out where to start processing messages from
               kafkaConsumer = new KafkaConsumer<String, String>(configProperties);

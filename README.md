@@ -1,4 +1,3 @@
-
 ## Examples
 
 ### Setup
@@ -44,21 +43,26 @@ Finally source the file to update the PATH.
 source ~/.bashrc
 ```
 
-
 #### Build the sample Producer and Consumer tools
 
-The source for these tools in this respository was taken from the javaworld[^1] article reference at the bottom of this post.
+The source for these tools in this respository was taken from the javaworld article reference at the bottom of this post.
 
 Build the source code
 
 ```
-mkdir -p bin
 gradle build
+```
 
+#### Setting the host IP
+
+In order to scale kafka locally an IP address of the host (which is not 127.0.0.1, 0.0.0.0 or localhost) is required.  Replace the value below to match your setup.  Plase the following inside your rc file.
+
+```
+export HOST="192.168.99.45"
 ```
 
 
-### Step 1: Single kafka node
+### Example 1: Single kafka node
 
 - A single producer and a single consumer
 - One partition as there is only one node
@@ -71,12 +75,45 @@ docker-compose up -d
 
 2. Create the topic
 
+```
+kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+```
 
+3. Start the consumer
+
+Inside a terminal (terminal 1) invoke the `kafka-console-consumer.sh`.  
+
+```
+kafka-console-consumer.sh --bootstrap-server $HOST:9092 --group cg1 --topic test
+```
+
+4. Start the producer
+
+Inside a second terminal (terminal 2) invoke the `kafka-console-producer.sh` and send several messages.
+
+```
+kafka-console-producer.sh --broker-list $HOST:9092 --topic test
+> message 1
+> message 2
+> message 3
+```
+
+5. Confirm the output in consumer terminal (terminal 1)
+
+You should see the following output inside the consumer terminal.
+
+```
+message 1
+message 2
+message 3
+```
 
 ## References
 
-[^1]: [https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html?page=2](https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html?page=2)
+[https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html?page=2](https://www.javaworld.com/article/3060078/big-data/big-data-messaging-with-kafka-part-1.html?page=2)
 
 [https://github.com/wurstmeister/kafka-docker](https://github.com/wurstmeister/kafka-docker)
 
 [https://stackoverflow.com/questions/38583608/connecting-to-zookeeper-in-a-apache-kafka-multi-node-cluster](https://stackoverflow.com/questions/38583608/connecting-to-zookeeper-in-a-apache-kafka-multi-node-cluster)
+
+[https://kafka.apache.org/quickstart](https://kafka.apache.org/quickstart)
