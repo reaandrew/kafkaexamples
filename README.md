@@ -64,10 +64,9 @@ export HOST="192.168.99.45"
 
 ### Example 1: Single kafka node
 
-![single-kafka-node.gif](single-kafka-node.gif)
+The following example sets up a single kafka node with a single zookeeper node, creates a topic and then uses the kafka consumer and producer (supplied in the kafka distribution) to send and receieve several messages.
 
-- A single producer and a single consumer
-- One partition as there is only one node
+![single-kafka-node.gif](single-kafka-node.gif)
 
 1. Start the cluster
 
