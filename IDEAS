@@ -1,0 +1,8 @@
+1. Create a tool to get the broker endpoints from zookeeper.
+
+2. Example of the connections
+  - Create a single consumer and publish 3 messages
+  - Create two consumers and publish 3 messages
+  - Create three consumers and publish 3 messages
+  - Create four consumers and publish 3 messages
+  - Create four consumers, public 3 messages, destroy a consumer and publish another 3 messages
