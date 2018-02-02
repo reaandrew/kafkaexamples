@@ -7,7 +7,8 @@ The following example sets up a single kafka node with a single zookeeper node, 
 1. Start the cluster
 
 ```
-docker-compose -f docker-compose-single-node.yml up -d
+cd example-1
+docker-compose up -d
 ```
 
 2. Create the topic
