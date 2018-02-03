@@ -57,7 +57,11 @@ export HOST="192.168.99.45"
 
 ## [Example 1: Single kafka node](example-1)
 
-Set up a single kafka node with a single zookeeper node, creates a topic and then uses the kafka consumer and producer (supplied in the kafka distribution) to send and receieve several messages.
+Set up a single kafka node with a single zookeeper node, creates a topic and then uses the kafka consumer and producer (supplied in the kafka distribution) to send and receive several messages.
+
+## [Example 2 - Multiple Kafka nodes with multiple partitions](example-2)
+
+Set up three kafka nodes with a single zookeeper node, creates a topic with three paritions, uses three different consumers and a single producer to send and receive several messages.  This example shows how consumers can be automatically distributed to a separate partition.
 
 ## References
 
