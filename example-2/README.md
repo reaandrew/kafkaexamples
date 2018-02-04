@@ -21,15 +21,7 @@ docker-compose scale kafka=3
 kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 3 --topic test
 ```
 
-4. Get the list of current brokers from docker
-
-This is only one way of getthing this information.  Another way would be to write small script and enumerate the keys inside zookeeper to get the endpoints.  Since this example is using `docker-compose`, the following one line gets the job done.
-
-```
-export BROKERS=$(docker-compose ps kafka | tail -n +3 | tr -s ' ' | cut -d' ' -f4 | cut -d'-' -f1 | paste -sd ',')
-```
-
-5. Start three consumers
+4. Start three consumers
 
  - Inside three separate terminals (terminal 1, 2 and 3) invoke the `kafka-console-consumer.sh`.  
 
@@ -37,7 +29,7 @@ export BROKERS=$(docker-compose ps kafka | tail -n +3 | tr -s ' ' | cut -d' ' -f
 kafka-console-consumer.sh --bootstrap-server $BROKERS --group cg1 --topic test
 ```
 
-6. Start the producer
+5. Start the producer
 
 Inside a fourth terminal (terminal 4) invoke the `kafka-console-producer.sh` and send several messages.
 
@@ -48,7 +40,7 @@ kafka-console-producer.sh --broker-list $BROKERS --topic test
 > message 3
 ```
 
-7. Confirm the output in consumer terminals
+6. Confirm the output in consumer terminals
 
 - You should see `message 1` output inside consumer terminal 1.
 - You should see `message 2` output inside consumer terminal 2.
